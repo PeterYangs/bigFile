@@ -1,0 +1,14 @@
+{
+    "name": "peteryang/big-file",
+    "description": "upload big file",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PeterYangs",
+            "email": "904801074@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
