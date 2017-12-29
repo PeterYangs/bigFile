@@ -7,7 +7,12 @@ var bigFile={
     totalBlobNum:0,//文件总块数
     blobNum:1,//当前是第几块
     i:0,//计数器
-    upload:function (url,callback) {
+    init:function (url,callback) {
+
+
+
+    },
+    upload:function (url,f,callback) {
 
 
 
@@ -28,13 +33,18 @@ var bigFile={
         var s = this.blobSlice(f, this.i*this.slice_size, Number(this.i*this.slice_size)+Number(this.slice_size));
 
 
+        console.log(this.i*this.slice_size+"-------------------"+Number(this.i*this.slice_size)+Number(this.slice_size));
+
+
+
+
 
         data.append('file_name', f.name);//文件名
 
 
-        data.append('total_blob_num', this.totalBlobNum.toString());//总块数
+        data.append('total_blob_num', this.totalBlobNum);//总块数
 
-        data.append('blob_num',this.blobNum.toString());//当前是第几块
+        data.append('blob_num',this.blobNum);//当前是第几块
 
 
 
@@ -61,17 +71,20 @@ var bigFile={
             contentType: false,//contentType设置为false。因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
             success:function (re) {
 
+                // console.log(s);
 
                 re=JSON.parse(re);
 
-                console.log(re);
+                // console.log(re);
 
                 if(re.code==1){
 
-                    this.i++;
+                    context.i++;
 
                     //返回1为还未传完，等待后续文件
-                    upload();
+                    context.upload(url,f);
+
+
 
                 }else if(re.code==2) {
 
@@ -80,10 +93,10 @@ var bigFile={
                     this.blobNum=1;
                     this.totalBlobNum=0;
 
-                    callback(re);
+                    // callback(re);
                     // context.callback(re);
 
-                    // alert('上传成功！');
+                    alert('上传成功！');
 
 
                 }

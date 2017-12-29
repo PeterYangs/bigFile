@@ -8,13 +8,13 @@
 </head>
 <body>
 
-    <input  name="file" type="file"  id="file" onchange="upload()"/>
+    <input  name="file" type="file"  id="file" onchange="upload(this)"/>
 
 </body>
    <script>
 
-       function upload() {
-           bigFile.upload('xhr.php',function (data) {
+       function upload(obj) {
+           bigFile.upload('xhr.php',$(obj)[0].files[0],function (data) {
 
 
                console.log(data);
@@ -24,8 +24,8 @@
 
 
        
-       
 
+//
 //       var slice_size=1024*1024;//将文件切割成这个大小
 //
 //       var totalBlobNum=0;//文件总块数
@@ -55,8 +55,11 @@
 //                var s = blobSlice(f, i*slice_size, Number(i*slice_size)+Number(slice_size));//这里第三参数不是长度，是起读点到终点，公式为 start+length
 //
 //
+//                 console.log(i*slice_size+"-----------------------"+Number(i*slice_size)+Number(slice_size));
 //
-////                console.log(s);
+//
+//
+//                // console.log(s);
 //
 //
 //
@@ -81,7 +84,7 @@
 //
 //
 //
-////
+// //
 //                $.ajax({
 //                    url:"xhr.php",
 //                    type:"post",
@@ -95,7 +98,7 @@
 //
 //                        re=JSON.parse(re);
 //
-//                        console.log(re);
+//                        // console.log(re);
 //
 //                        if(re.code==1){
 //
