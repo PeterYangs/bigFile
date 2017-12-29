@@ -140,8 +140,9 @@ class Upload {
                 $data['percent']=number_format($this->blobNum/$this->totalBlobNum,2,'.','')*100;
                 $data['code'] = 2;
                 $data['msg'] = 'success';
+                $data['file_name']=$this->fileName;
 //                $data['file_path'] = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['DOCUMENT_URI']).str_replace('.','',$this->sava).'/'. $this->fileName;
-                $data['fileName']=basename($data['file_path']);
+//                $data['fileName']=basename($data['file_path']);
 //                echo 2;
 
                 echo json_encode($data);
