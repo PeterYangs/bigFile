@@ -33,7 +33,7 @@ var bigFile={
         var s = this.blobSlice(f, this.i*this.slice_size, Number(this.i*this.slice_size)+Number(this.slice_size));
 
 
-        console.log(this.i*this.slice_size+"-------------------"+Number(this.i*this.slice_size)+Number(this.slice_size));
+        // console.log(this.i*this.slice_size+"-------------------"+Number(this.i*this.slice_size)+Number(this.slice_size));
 
 
 
@@ -75,14 +75,14 @@ var bigFile={
 
                 re=JSON.parse(re);
 
-                // console.log(re);
+                console.log(re);
 
                 if(re.code==1){
 
                     context.i++;
 
                     //返回1为还未传完，等待后续文件
-                    context.upload(url,f);
+                    context.upload(url,f,callback);
 
 
 
@@ -93,7 +93,7 @@ var bigFile={
                     this.blobNum=1;
                     this.totalBlobNum=0;
 
-                    // callback(re);
+                    callback(re);
                     // context.callback(re);
 
                     alert('上传成功！');
