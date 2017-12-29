@@ -21,7 +21,7 @@ var bigFile={
 
 
         //文件对象，这个是文件的数据
-       var f=$("#file")[0].files[0];
+       // var f=$("#file")[0].files[0];
 
 
         //总块数
