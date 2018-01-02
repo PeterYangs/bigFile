@@ -25,12 +25,20 @@ html
         <script>
     
             function upload() {
-                bigFile.upload('__URL__/xhr',function (data) {
-    
-    
-                    console.log(data);
-    
-                });
+           $("#file").bigFile({
+               fileObj:$(obj)[0].files[0],
+               url:"xhr.php",
+               callback:function (re) {
+                   console.log(re);
+
+               },
+               percent:function (re) {
+
+                   console.log(re);
+
+               }
+
+           });
             }
         </script>
     
