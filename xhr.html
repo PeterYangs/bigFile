@@ -9,7 +9,7 @@
 <body>
 
     <input  name="file" type="file"  id="file" onchange="upload(this)"/>
-    <input  name="file" type="button"   onclick="upload(this)" />
+    <!--<input  name="file" type="button"   onclick="upload(this)" />-->
 
 </body>
    <script>
@@ -19,7 +19,6 @@
            // getData();
 
            $("#file").bigFile({
-               fileObj:$(obj)[0].files[0],
                url:"xhr.php",
                callback:function (re) {
                    console.log(re);

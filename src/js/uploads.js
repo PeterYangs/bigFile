@@ -160,8 +160,12 @@ $.fn.extend({
                     opts.callback(re);
                     // context.callback(re);
 
-                    alert('上传成功！');
+                    // alert('上传成功！');
 
+
+                }else {
+
+                    console.log(re);
 
                 }
 

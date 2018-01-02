@@ -2,13 +2,12 @@
 namespace bigFile\upload;
 
 class Upload {
-//    private $filepath = './Public/upload/temp/'; //上传目录
     private $sava="./Public/upload/file/";        //保存地址
     private $tmpPath;  //PHP文件临时目录
     private $blobNum; //第几个文件块
     private $totalBlobNum; //文件块总数
     private $fileName; //文件名
-    private $uid;     //用户id
+    private $tag;     //用户id
 
     /**
      *
@@ -18,15 +17,25 @@ class Upload {
      * @param $blobNum         第几块
      * @param $totalBlobNum    总块数
      * @param $fileName        文件名称
-     * @param $uid             用户id
+     * @param $tag             文件标记（用来区别临时文件）
      */
-    public function __construct($tmpPath,$save,$blobNum,$totalBlobNum,$fileName,$uid){
+    public function __construct($tmpPath,$save,$blobNum,$totalBlobNum,$fileName,$tag){
         $this->tmpPath =  $tmpPath;
         $this->blobNum =  $blobNum;
         $this->totalBlobNum =  $totalBlobNum;
         $this->fileName =  $fileName;
-        $this->uid=isset($uid)?($uid."/"):"";
+        $this->tag=isset($tag)?($tag."/"):"";
         $this->sava=$save;
+
+        //写入权限检查
+        if($this->blobNum==1){
+
+            if(!is_writable($this->tmpPath)) exit(json_encode(['code'=>3,'msg'=>$this->tmpPath.":此文件夹无写入权限，请检查"]));
+            if(!is_writable($this->sava)) exit(json_encode(['code'=>3,'msg'=>$this->sava.":此文件夹无写入权限，请检查"]));
+
+
+
+        }
 
 
 
@@ -69,7 +78,7 @@ class Upload {
 
 
                 //将临时文件夹里的文件拼接起来
-                $filename_=$this->tmpPath."/".$this->uid."temp_".$i;
+                $filename_=$this->tmpPath."/".$this->tag."temp_".$i;
 
                 //获取其中一块
                 $blob = file_get_contents($filename_);
@@ -95,10 +104,14 @@ class Upload {
     private function deleteFileBlob(){
         for($i=1; $i<= $this->totalBlobNum; $i++){
 
-            $filename=$filename=$this->tmpPath."/".$this->uid."temp_".$i;
+            $filename=$this->tmpPath."/".$this->tag."temp_".$i;
+
+            //删除文件
             @unlink($filename);
-//            @unlink($this->filepath.'/'. $this->fileName.'__'.$i);
+
         }
+        //删除文件夹
+        @rmdir($this->tmpPath."/".$this->tag);
     }
 
     //移动文件
@@ -108,7 +121,7 @@ class Upload {
         $this->touchDir();
 //        $filename = $this->filepath.'/'. $this->fileName.'__'.$this->blobNum;
 
-        $filename=$this->tmpPath."/".$this->uid."temp_".$this->blobNum;
+        $filename=$this->tmpPath."/".$this->tag."temp_".$this->blobNum;
 
 //        echo $;
         move_uploaded_file($_FILES['file']['tmp_name'],$filename);
@@ -152,7 +165,7 @@ class Upload {
 //            echo "1111111111111";
 
 
-            $filename=$this->tmpPath."/".$this->uid."temp_".$this->blobNum;
+            $filename=$this->tmpPath."/".$this->tag."temp_".$this->blobNum;
 //            echo $filename;
             if(file_exists($filename)){
                 $data['code'] = 1;
@@ -173,10 +186,12 @@ class Upload {
 
     }
 
-    //建立上传文件夹
+    //建立临时上传文件夹
     private function touchDir(){
-        if(!file_exists($this->tmpPath."/".$this->uid)){
-            return mkdir($this->tmpPath."/".$this->uid);
+        if(!file_exists($this->tmpPath."/".$this->tag)){
+
+
+            return mkdir($this->tmpPath."/".$this->tag);
         }
     }
 
