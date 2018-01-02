@@ -25,8 +25,7 @@ html
         <script>
     
             function upload() {
-           $("#file").bigFile({
-               fileObj:$(obj)[0].files[0],
+           $("#file").bigFile({ 
                url:"xhr.php",
                callback:function (re) {
                    console.log(re);
