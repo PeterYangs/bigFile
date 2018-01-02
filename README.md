@@ -27,16 +27,8 @@ html
             function upload() {
            $("#file").bigFile({ 
                url:"xhr.php",
-               callback:function (re) {
-                   console.log(re);
-
-               },
-               percent:function (re) {
-
-                   console.log(re);
-
-               }
-
+               callback:function (re) {  console.log(re); },
+               percent:function (re) {  console.log(re); }
            });
             }
         </script>
