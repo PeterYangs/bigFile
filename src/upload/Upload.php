@@ -36,9 +36,6 @@ class Upload {
 
 
         }
-
-
-
 //        echo json_encode($this->fileName);
 
 //        print_r($_F);

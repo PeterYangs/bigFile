@@ -47,15 +47,14 @@ html
     php
     
     
+    
+    
    
 
-     function xhr(){
+            require "autoload.php"
     
-            $post=input();
-    
-    
-            $up=new \bigFile\upload\Upload("./temp","./upload",$post['blob_num'],$post['total_blob_num'],$post['file_name'],12);
+            $up=new \bigFile\upload\Upload("./temp","./upload",$_POST['blob_num'],$_POST['total_blob_num'],$_POST['file_name'],12);
     
             $up->apiReturn();
-        }
+        
     

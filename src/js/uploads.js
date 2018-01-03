@@ -16,6 +16,13 @@
     };
 
 
+    var Upload=function () {
+
+    };
+
+
+
+
 
 $.fn.extend({
 
