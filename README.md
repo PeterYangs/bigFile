@@ -3,8 +3,6 @@
 
 **例子：**
 
-以tp5框架为例
-
 html
     
     <!DOCTYPE html>
