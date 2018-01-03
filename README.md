@@ -12,7 +12,7 @@ html
         <title>Title</title>
         <script  src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
         <!--<script type="text/javascript" src="__PUBLIC__/home/jquery.js"></script>-->
-        <script src="__ROOT__/vendor/peteryang/big-file/src/js/upload.js"></script>
+        <script src="__ROOT__/vendor/peteryang/big-file/src/js/uploads.js"></script>
     
     </head>
     <body>

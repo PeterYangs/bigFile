@@ -16,9 +16,9 @@
     };
 
 
-    var Upload=function () {
-
-    };
+    // var Upload=function () {
+    //
+    // };
 
 
 
@@ -46,8 +46,8 @@ $.fn.extend({
 
         upload(opts);
 
-
-
+        // upload.call(this);
+        // Array.prototype.push.apply()
 
 
     }
@@ -92,6 +92,11 @@ $.fn.extend({
      */
     function upload(opts) {
 
+
+        // console.log(this);
+        //
+        //
+        // return false;
 
 
         var data = new FormData();//模拟表单
@@ -160,9 +165,9 @@ $.fn.extend({
                 }else if(re.code==2) {
 
                     //初始化，等待下一个文件继续
-                    opts.i=0;
-                    opts.blobNum=1;
-                    opts.totalBlobNum=0;
+                    // opts.i=0;
+                    // opts.blobNum=1;
+                    // opts.totalBlobNum=0;
 
                     opts.callback(re);
                     // context.callback(re);
