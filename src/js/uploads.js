@@ -15,11 +15,128 @@
         percent:function () {}
     };
 
+    /**
+     * 构造函数
+     * @param ele
+     * @param opt
+     * @constructor
+     */
+    var Upload=function (ele,opt) {
 
-    // var Upload=function () {
-    //
-    // };
+        this.$ele=ele;
 
+        this.$opt=opt;
+
+        // console.log($(this)[0].files[0]);
+
+        this.$opt.fileObj=$(this.$ele)[0].files[0];
+
+
+    };
+
+
+    Upload.prototype={
+        upload:function () {
+
+
+
+            // console.log(this.$opt);
+
+            var data = new FormData();//模拟表单
+
+
+            //这里第三参数不是长度，是起读点到终点，公式为 start+length
+            var s = blobSlice(this.$opt.fileObj, this.$opt.i*this.$opt.slice_size, Number(this.$opt.i*this.$opt.slice_size)+Number(this.$opt.slice_size));
+
+
+            // console.log(this.i*this.slice_size+"-------------------"+Number(this.i*this.slice_size)+Number(this.slice_size));
+
+
+
+
+
+            data.append('file_name', this.$opt.fileObj.name);//文件名
+
+
+            data.append('total_blob_num', this.$opt.totalBlobNum.toString());//总块数
+
+            data.append('blob_num',this.$opt.blobNum.toString());//当前是第几块
+
+
+
+            this.$opt.blobNum++;
+
+
+
+            data.append('file', s);//当前块的数据
+
+
+
+
+
+            var context=this;
+
+//
+            $.ajax({
+                url:this.$opt.url,
+                type:"post",
+                data:data,
+
+                cache: false,//不缓存
+                processData: false,//processData设置为false。因为data值是FormData对象，不需要对数据做处理。
+                contentType: false,//contentType设置为false。因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
+                success:function (re) {
+
+                    // console.log(s);
+
+                    re=JSON.parse(re);
+
+                    // console.log(re);
+
+                    if(re.code==1){
+
+                        context.$opt.i++;
+
+
+                        context.$opt.percent(re);
+
+                        //返回1为还未传完，等待后续文件
+                        context.upload();
+
+
+
+                    }else if(re.code==2) {
+
+                        //初始化，等待下一个文件继续
+                        // opts.i=0;
+                        // opts.blobNum=1;
+                        // opts.totalBlobNum=0;
+
+                        context.$opt.callback(re);
+                        // context.callback(re);
+
+                        // alert('上传成功！');
+
+
+                    }else {
+
+                        console.log(re);
+
+                    }
+
+
+
+                }
+
+
+            });
+
+
+        }
+
+
+
+    };
 
 
 
@@ -43,8 +160,13 @@ $.fn.extend({
         opts.totalBlobNum=(Math.ceil(opts.fileObj.size/opts.slice_size));
 
 
+        var u=new Upload(this,opts);
 
-        upload(opts);
+
+        u.upload(opts);
+
+
+        // upload(opts);
 
         // upload.call(this);
         // Array.prototype.push.apply()
